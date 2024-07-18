@@ -14,71 +14,6 @@ function setup() {
   strokeWeight(1);
   noFill();
 
-  function keyTyped() {
-    if (key === "s") {
-      save("Truchet" + noise(1) + ".svg");
-    }
-  }
-
-  function angleIntersectGen(x1, y1, x2, y2, r1, r2) {
-
-    // https://lucidar.me/en/mathematics/how-to-calculate-the-intersection-points-of-two-circles/
-
-    d = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-    a = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
-    h = sqrt(r1 * r1 - a * a);
-    x5 = x1 + a / d * (x2 - x1);
-    y5 = y1 + a / d * (y2 - y1);
-
-    xIntersect1 = x5 - (h * (y2 - y1) / d)
-    yIntersect1 = y5 + (h * (x2 - x1) / d);
-
-    //rect(xIntersect1,yIntersect1,5,5);
-
-    xIntersect2 = x5 + (h * (y2 - y1) / d);
-    yIntersect2 = y5 - (h * (x2 - x1) / d);
-
-    //rect(xIntersect2,yIntersect2,5,5);
-
-    return acos((y2 - yIntersect2) / r2);
-    //return resultat;
-  }
-
-  //arc(0,200,300,300,3*PI/2,0);  
-  //arc(200,200,300,300,PI,3*PI/2);
-
-  //alph = angleIntersectGen (0,200,200,200,150,150); 
-  //arc(200,200,300,300,PI,3*PI/2-alph);  
-  //arc(200,200,300,300,3*PI/2-alph,3*PI/2); 
-
-  function arcIntersect2(c, r1, r2) {
-    if ((r1 + r2) >= c) {
-      alph = angleIntersectGen(0, c, c, c, r1, r2);
-      arc(c, c, 2 * r2, 2 * r2, 3 * PI / 2 - alph, 3 * PI / 2);
-
-
-    } else {
-
-      arc(c, 0, 2 * r2, 2 * r2, PI, 3 * PI / 2);
-    }
-
-
-
-  }
-
-
-  function arcIntersect(c, r1, r2) {
-    if ((r1 + r2) > (c * sqrt(2))) {
-      alph = angleIntersect(c, r1, r2);
-      arc(c, 0, 2 * r2, 2 * r2, 0.5 * PI, 0.5 * PI + alph);
-      arc(c, 0, 2 * r2, 2 * r2, PI - alph, PI);
-    } else {
-      alph = angleIntersect(c, r1, r2);
-      arc(c, 0, 2 * r2, 2 * r2, 0.5 * PI, PI);
-    }
-  }
-
-
 
   function angleIntersect(c, r1, r2) {
 
@@ -100,10 +35,58 @@ function setup() {
   }
 
 
+  function angleIntersectGen(x1, y1, x2, y2, r1, r2) {
+
+    d = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    a = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
+    h = sqrt(r1 * r1 - a * a);
+    x5 = x1 + a / d * (x2 - x1);
+    y5 = y1 + a / d * (y2 - y1);
+
+    xIntersect1 = x5 - (h * (y2 - y1) / d)
+    yIntersect1 = y5 + (h * (x2 - x1) / d);
+
+    xIntersect2 = x5 + (h * (y2 - y1) / d);
+    yIntersect2 = y5 - (h * (x2 - x1) / d);
+
+    return acos((y2 - yIntersect2) / r2);
+
+  }
+
+
+
+  function arcIntersect2(c, r1, r2) {
+    if ((r1 + r2) >= c) {
+      alph = angleIntersectGen(0, c, c, c, r1, r2);
+      arc(c, c, 2 * r2, 2 * r2, 3 * PI / 2 - alph, 3 * PI / 2);
+
+    } else {
+
+      arc(c, 0, 2 * r2, 2 * r2, PI, 3 * PI / 2);
+    }
+
+  }
+
+
+  function arcIntersect(c, r1, r2) {
+    if ((r1 + r2) > (c * sqrt(2))) {
+      alph = angleIntersect(c, r1, r2);
+      arc(c, 0, 2 * r2, 2 * r2, 0.5 * PI, 0.5 * PI + alph);
+      arc(c, 0, 2 * r2, 2 * r2, PI - alph, PI);
+    } else {
+      alph = angleIntersect(c, r1, r2);
+      arc(c, 0, 2 * r2, 2 * r2, 0.5 * PI, PI);
+    }
+  }
+
+
+
+
+
 
 
   c = 50 //tile size
-  numb = 7; // number of line within tiles
+  numb = 8; // number of line within tiles
   pas = c / numb;
   nbPas = 1;
   start = nbPas;
@@ -131,7 +114,7 @@ function setup() {
       print(e);
       print(f);
       //drawTile(arrayTile[f][e]);
-      drawTile(random([1,2,3,4,5]));
+      drawTile(random([1, 2, 3, 4]));
       //drawTile(7);
 
       pop();
